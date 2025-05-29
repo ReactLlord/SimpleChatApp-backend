@@ -1,8 +1,14 @@
 import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
+import dotenv from "dotenv"
 import mongoose from 'mongoose';
 import cors from 'cors';
+
+dotenv.config()
+
+const MONGO_URL = process.env.MONGO_URL
+const LOCAL_URL = 'mongodb://localhost:27017/chat-app'
 
 // Mongoose models
 const UserSchema = new mongoose.Schema({
@@ -28,7 +34,7 @@ const io = new Server(server, {
 });
 
 // Connect MongoDB
-mongoose.connect('mongodb://localhost:27017/chat-app', {
+mongoose.connect(`${MONGO_URL}`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(() => console.log('MongoDB connected'));
